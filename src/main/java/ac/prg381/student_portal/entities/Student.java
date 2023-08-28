@@ -1,4 +1,4 @@
-package ac.prg381.student_portal;
+package ac.prg381.student_portal.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
