@@ -1,13 +1,13 @@
-package ac.prg381.studentportal;
+package ac.prg381.student_portal;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class StudentportalApplication {
+public class StudentPortalApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(StudentportalApplication.class, args);
+		SpringApplication.run(StudentPortalApplication.class, args);
 	}
 
 }
