@@ -1,5 +1,6 @@
 package ac.prg381.student_portal;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,12 +11,17 @@ import jakarta.persistence.Table;
 @Table
 public class Administrator {
 
+  // Properties
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
   private String name;
+
+  @Column(unique = true)
   private String email;
+
   private String password;
 
   // Constructors
@@ -32,7 +38,7 @@ public class Administrator {
   // Getters and Setters
 
   public Long getId() {
-    return id;
+    return this.id;
   }
 
   public void setId(Long id) {
@@ -40,7 +46,7 @@ public class Administrator {
   }
 
   public String getName() {
-    return name;
+    return this.name;
   }
 
   public void setName(String name) {
@@ -48,7 +54,7 @@ public class Administrator {
   }
 
   public String getEmail() {
-    return email;
+    return this.email;
   }
 
   public void setEmail(String email) {
@@ -56,12 +62,12 @@ public class Administrator {
   }
 
   public String getPassword() {
-    return password;
+    return this.password;
   }
 
   public void setPassword(String password) {
     this.password = password;
   }
 
-  // Other methods
+  // Other
 }

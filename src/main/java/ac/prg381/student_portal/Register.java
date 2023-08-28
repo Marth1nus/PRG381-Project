@@ -11,6 +11,8 @@ import jakarta.persistence.Table;
 @Table
 public class Register {
 
+  // Properties
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -33,7 +35,7 @@ public class Register {
   // Getters and Setters
 
   public Long getId() {
-    return id;
+    return this.id;
   }
 
   public void setId(Long id) {
@@ -41,7 +43,7 @@ public class Register {
   }
 
   public Student getStudent() {
-    return student;
+    return this.student;
   }
 
   public void setStudent(Student student) {
@@ -49,12 +51,12 @@ public class Register {
   }
 
   public String getCourseName() {
-    return courseName;
+    return this.courseName;
   }
 
   public void setCourseName(String courseName) {
     this.courseName = courseName;
   }
 
-  // Other methods
+  // Other
 }
