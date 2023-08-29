@@ -3,8 +3,6 @@ package ac.prg381.student_portal.entities;
 import jakarta.persistence.*;
 import java.util.List;
 
-import org.springframework.stereotype.Indexed;
-
 /* TODO: Look into @Indexed and hibernate search. */
 
 @Entity

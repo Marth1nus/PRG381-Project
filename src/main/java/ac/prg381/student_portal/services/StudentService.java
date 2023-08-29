@@ -2,7 +2,6 @@ package ac.prg381.student_portal.services;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ac.prg381.student_portal.entities.Student;
@@ -13,7 +12,6 @@ public class StudentService {
 
   private final StudentRepository studentRepository;
 
-  @Autowired
   public StudentService(StudentRepository studentRepository) {
     this.studentRepository = studentRepository;
   }
