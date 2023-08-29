@@ -1,52 +1,69 @@
 package ac.prg381.student_portal.services;
 
+import java.security.KeyException;
 import java.util.List;
+import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ac.prg381.student_portal.entities.Register;
 import ac.prg381.student_portal.repositories.RegisterRepository;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class RegisterService {
 
   private final RegisterRepository registerRepository;
 
-  @Autowired
   public RegisterService(RegisterRepository registerRepository) {
     this.registerRepository = registerRepository;
   }
 
-  // Create
+  // ============
+  // == Create ==
+  // ============
 
-  public Register addOrSetRegister(Register register) {
+  public Register addRegister(Register register) throws KeyException {
+    if (register.getId() != null)
+      throw new KeyException("register.id must be null to be added");
     return registerRepository.save(register);
   }
 
-  public Register addRegister(Register register) {
-    Register existingRegister = registerRepository.findById(register.getId()).orElse(null);
-    return existingRegister == null ? addOrSetRegister(register) : null;
-  }
-
-  // Read
+  // ==========
+  // == Read ==
+  // ==========
 
   public List<Register> getAllRegisters() {
     return registerRepository.findAll();
   }
 
-  public Register getRegisterById(Long id) {
-    return registerRepository.findById(id).orElse(null);
+  public Optional<Register> getRegisterById(Long id) {
+    return registerRepository.findById(id);
   }
 
-  // Update
+  public List<Register> getRegistersByCourseName(String courseName) {
+    return registerRepository.findByCourseName(courseName);
+  }
+
+  public List<Register> getRegistersByCourseNameLike(String courseName) {
+    return registerRepository.findByCourseNameLike(courseName);
+  }
+
+  // ============
+  // == Update ==
+  // ============
 
   public Register setRegister(Register register) {
-    Register existingRegister = registerRepository.findById(register.getId()).orElse(null);
-    return existingRegister != null ? addOrSetRegister(register) : null;
+    registerRepository
+        .findById(register.getId())
+        .orElseThrow(
+            () -> new EntityNotFoundException(String.format("Register with id '%d' not found", register.getId())));
+    return registerRepository.save(register);
   }
 
-  // Delete
+  // ============
+  // == Delete ==
+  // ============
 
   public void removeRegisterById(Long id) {
     registerRepository.deleteById(id);

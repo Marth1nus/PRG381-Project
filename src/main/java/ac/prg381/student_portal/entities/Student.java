@@ -1,9 +1,7 @@
 package ac.prg381.student_portal.entities;
 
 import jakarta.persistence.*;
-import java.util.Set;
-
-import org.springframework.stereotype.Indexed;
+import java.util.List;
 
 /* TODO: Look into @Indexed and hibernate search. */
 
@@ -11,7 +9,9 @@ import org.springframework.stereotype.Indexed;
 @Table(name = "students")
 public class Student {
 
-  // Properties
+  // ================
+  // == Properties ==
+  // ================
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,9 +30,11 @@ public class Student {
   private String password;
 
   @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private Set<Register> registers;
+  private List<Register> registers;
 
-  // Constructors
+  // ==================
+  // == Constructors ==
+  // ==================
 
   public Student() {
   }
@@ -44,53 +46,59 @@ public class Student {
     this.password = password;
   }
 
-  // Getters and Setters
+  // =============
+  // == Getters ==
+  // =============
 
   public Long getId() {
     return this.id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
   }
 
   public String getName() {
     return this.name;
   }
 
-  public void setName(String name) {
-    this.name = name;
-  }
-
   public String getAddress() {
     return this.address;
-  }
-
-  public void setAddress(String address) {
-    this.address = address;
   }
 
   public String getEmail() {
     return this.email;
   }
 
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
   public String getPassword() {
     return this.password;
+  }
+
+  public List<Register> getRegistrations() {
+    return this.registers;
+  }
+
+  // =============
+  // == Setters ==
+  // =============
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
   }
 
   public void setPassword(String password) {
     this.password = password;
   }
 
-  public Set<Register> getRegistrations() {
-    return this.registers;
-  }
-
-  public void setRegistrations(Set<Register> registers) {
+  public void setRegistrations(List<Register> registers) {
     this.registers = registers;
   }
 

@@ -1,52 +1,85 @@
 package ac.prg381.student_portal.services;
 
+import java.security.KeyException;
 import java.util.List;
+import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ac.prg381.student_portal.entities.Student;
 import ac.prg381.student_portal.repositories.StudentRepository;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class StudentService {
 
   private final StudentRepository studentRepository;
 
-  @Autowired
   public StudentService(StudentRepository studentRepository) {
     this.studentRepository = studentRepository;
   }
 
-  // Create
+  // ============
+  // == Create ==
+  // ============
 
-  public Student addOrSetStudent(Student student) {
+  public Student addStudent(Student student) throws KeyException {
+    if (student.getId() != null)
+      throw new KeyException("student.id must be null to be added");
     return studentRepository.save(student);
   }
 
-  public Student addStudent(Student student) {
-    Student existingStudent = studentRepository.findById(student.getId()).orElse(null);
-    return existingStudent == null ? addOrSetStudent(student) : null;
-  }
-
-  // Read
+  // ==========
+  // == Read ==
+  // ==========
 
   public List<Student> getAllStudents() {
     return studentRepository.findAll();
   }
 
-  public Student getStudentById(Long id) {
-    return studentRepository.findById(id).orElse(null);
+  public Optional<Student> getStudentById(Long id) {
+    return studentRepository.findById(id);
   }
 
-  // Update
+  public List<Student> getStudentsByName(String name) {
+    return studentRepository.findByName(name);
+  }
+
+  public List<Student> getStudentsByAddress(String address) {
+    return studentRepository.findByAddress(address);
+  }
+
+  public List<Student> getStudentsByEmail(String email) {
+    return studentRepository.findByEmail(email);
+  }
+
+  public List<Student> getStudentsByNameLike(String name) {
+    return studentRepository.findByNameLike(name);
+  }
+
+  public List<Student> getStudentsByAddressLike(String address) {
+    return studentRepository.findByAddressLike(address);
+  }
+
+  public List<Student> getStudentsByEmailLike(String email) {
+    return studentRepository.findByEmailLike(email);
+  }
+
+  // ============
+  // == Update ==
+  // ============
 
   public Student setStudent(Student student) {
-    Student existingStudent = studentRepository.findById(student.getId()).orElse(null);
-    return existingStudent != null ? addOrSetStudent(student) : null;
+    studentRepository
+        .findById(student.getId())
+        .orElseThrow(
+            () -> new EntityNotFoundException(String.format("Student with id '%d' not found", student.getId())));
+    return studentRepository.save(student);
   }
 
-  // Delete
+  // ============
+  // == Delete ==
+  // ============
 
   public void removeStudentById(Long id) {
     studentRepository.deleteById(id);

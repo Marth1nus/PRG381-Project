@@ -1,52 +1,78 @@
 package ac.prg381.student_portal.services;
 
+import java.security.KeyException;
 import java.util.List;
+import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ac.prg381.student_portal.entities.Administrator;
 import ac.prg381.student_portal.repositories.AdministratorRepository;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class AdministratorService {
 
   private final AdministratorRepository administratorRepository;
 
-  @Autowired
   public AdministratorService(AdministratorRepository administratorRepository) {
     this.administratorRepository = administratorRepository;
   }
 
-  // Create
+  // ============
+  // == Create ==
+  // ============
 
-  public Administrator addOrSetAdministrator(Administrator administrator) {
+  public Administrator addAdministrator(Administrator administrator) throws KeyException {
+    if (administrator.getId() != null)
+      throw new KeyException("administrator.id must be null to be added");
     return administratorRepository.save(administrator);
   }
 
-  public Administrator addAdministrator(Administrator administrator) {
-    Administrator existingAdministrator = administratorRepository.findById(administrator.getId()).orElse(null);
-    return existingAdministrator == null ? addOrSetAdministrator(administrator) : null;
-  }
-
-  // Read
+  // ==========
+  // == Read ==
+  // ==========
 
   public List<Administrator> getAllAdministrators() {
     return administratorRepository.findAll();
   }
 
-  public Administrator getAdministratorById(Long id) {
-    return administratorRepository.findById(id).orElse(null);
+  public Optional<Administrator> getAdministratorById(Long id) {
+    return administratorRepository.findById(id);
   }
 
-  // Update
+  public List<Administrator> getAdministratorsByName(String name) {
+    return administratorRepository.findByName(name);
+  }
+
+  public List<Administrator> getAdministratorsByEmail(String email) {
+    return administratorRepository.findByEmail(email);
+  }
+
+  public List<Administrator> getAdministratorsByNameLike(String name) {
+    return administratorRepository.findByNameLike(name);
+  }
+
+  public List<Administrator> getAdministratorsByEmailLike(String email) {
+    return administratorRepository.findByEmailLike(email);
+  }
+
+  // ============
+  // == Update ==
+  // ============
 
   public Administrator setAdministrator(Administrator administrator) {
-    Administrator existingAdministrator = administratorRepository.findById(administrator.getId()).orElse(null);
-    return existingAdministrator != null ? addOrSetAdministrator(administrator) : null;
+    administratorRepository
+        .findById(administrator.getId())
+        .orElseThrow(
+            () -> new EntityNotFoundException(
+                String.format("Administrator with id '%d' not found", administrator.getId())));
+    return administratorRepository.save(administrator);
   }
 
-  // Delete
+  // ============
+  // == Delete ==
+  // ============
 
   public void removeAdministratorById(Long id) {
     administratorRepository.deleteById(id);
