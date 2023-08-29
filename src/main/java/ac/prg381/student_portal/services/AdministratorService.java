@@ -7,7 +7,6 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import ac.prg381.student_portal.entities.Administrator;
-import ac.prg381.student_portal.entities.Student;
 import ac.prg381.student_portal.repositories.AdministratorRepository;
 import jakarta.persistence.EntityNotFoundException;
 

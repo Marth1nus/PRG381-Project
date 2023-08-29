@@ -1,17 +1,14 @@
 package ac.prg381.student_portal.controllers.v1;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import ac.prg381.student_portal.entities.Student;
-import ac.prg381.student_portal.services.StudentService;
-
+import java.security.KeyException;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import ac.prg381.student_portal.entities.Student;
+import ac.prg381.student_portal.services.StudentService;
 
 @RestController
 @RequestMapping("/api/v1/student")
@@ -28,13 +25,10 @@ public class StudentController {
   // ============
 
   @PostMapping("/add")
-  public ResponseEntity<?> postNew(@RequestBody Student entity) {
-    Optional<Student> newStudent = studentService.addStudent(entity);
-    return newStudent.isPresent()
-        ? ResponseEntity.status(HttpStatus.CREATED)
-            .body(newStudent.get())
-        : ResponseEntity.status(HttpStatus.CONFLICT)
-            .body(String.format("Student with id '%d' already exists", entity.getId()));
+  public ResponseEntity<Student> postNew(@RequestBody Student entity) throws KeyException {
+    return ResponseEntity
+        .status(HttpStatus.CREATED)
+        .body(studentService.addStudent(entity));
   }
 
   // ==========
@@ -43,17 +37,15 @@ public class StudentController {
 
   @GetMapping("/{get}")
   public ResponseEntity<List<Student>> getAll(@RequestParam String param) {
-    return ResponseEntity.ok(studentService.getAllStudents());
+    return ResponseEntity
+        .ok(studentService.getAllStudents());
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<?> getById(@PathVariable Long id) {
-    Optional<Student> gotStudent = studentService.getStudentById(id);
-    return gotStudent.isPresent()
-        ? ResponseEntity.status(HttpStatus.FOUND)
-            .body(gotStudent.get())
-        : ResponseEntity.status(HttpStatus.NOT_FOUND)
-            .body(String.format("Student with id '%d' not found", id));
+  public ResponseEntity<Student> getById(@PathVariable Long id) {
+    return ResponseEntity
+        .status(HttpStatus.FOUND)
+        .body(studentService.getStudentById(id).get());
   }
 
   // ============
@@ -61,11 +53,10 @@ public class StudentController {
   // ============
 
   @PutMapping("/set/{id}")
-  public ResponseEntity<?> putById(@PathVariable Long id, @RequestBody Student entity) {
+  public ResponseEntity<Student> putById(@PathVariable Long id, @RequestBody Student entity) {
     entity.setId(id);
-    Optional<Student> gotStudent = studentService.setStudent(entity);
-    return gotStudent.get()
-    ? 
+    return ResponseEntity
+        .ok(studentService.setStudent(entity));
   }
 
   // ============
@@ -73,8 +64,10 @@ public class StudentController {
   // ============
 
   @DeleteMapping("/del/{id}")
-  public ResponseEntity<?> deleteById(@PathVariable Long id, @RequestBody Student entity) {
-    // TODO: process Delete request
+  public ResponseEntity<Student> deleteById(@PathVariable Long id) {
+    Student deletedStudent = studentService.getStudentById(id).orElseThrow();
+    studentService.removeStudentById(id);
+    return ResponseEntity.ok(deletedStudent);
   }
 
 }

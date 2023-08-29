@@ -4,7 +4,6 @@ import java.security.KeyException;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import ac.prg381.student_portal.entities.Student;
