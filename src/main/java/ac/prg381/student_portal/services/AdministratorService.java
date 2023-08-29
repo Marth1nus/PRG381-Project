@@ -1,12 +1,15 @@
 package ac.prg381.student_portal.services;
 
+import java.security.KeyException;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import ac.prg381.student_portal.entities.Administrator;
+import ac.prg381.student_portal.entities.Student;
 import ac.prg381.student_portal.repositories.AdministratorRepository;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class AdministratorService {
@@ -21,10 +24,10 @@ public class AdministratorService {
   // == Create ==
   // ============
 
-  public Optional<Administrator> addAdministrator(Administrator administrator) {
-    return administratorRepository.findById(administrator.getId()).isPresent()
-        ? Optional.empty()
-        : Optional.ofNullable(administratorRepository.save(administrator));
+  public Administrator addAdministrator(Administrator administrator) throws KeyException {
+    if (administrator.getId() != null)
+      throw new KeyException("administrator.id must be null to be added");
+    return administratorRepository.save(administrator);
   }
 
   // ==========
@@ -59,10 +62,13 @@ public class AdministratorService {
   // == Update ==
   // ============
 
-  public Optional<Administrator> setAdministrator(Administrator administrator) {
-    return administratorRepository.findById(administrator.getId()).isPresent()
-        ? Optional.ofNullable(administratorRepository.save(administrator))
-        : Optional.empty();
+  public Administrator setAdministrator(Administrator administrator) {
+    administratorRepository
+        .findById(administrator.getId())
+        .orElseThrow(
+            () -> new EntityNotFoundException(
+                String.format("Administrator with id '%d' not found", administrator.getId())));
+    return administratorRepository.save(administrator);
   }
 
   // ============

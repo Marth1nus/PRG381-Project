@@ -1,12 +1,15 @@
 package ac.prg381.student_portal.services;
 
+import java.security.KeyException;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import ac.prg381.student_portal.entities.Student;
 import ac.prg381.student_portal.repositories.StudentRepository;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class StudentService {
@@ -21,10 +24,10 @@ public class StudentService {
   // == Create ==
   // ============
 
-  public Optional<Student> addStudent(Student student) {
-    return studentRepository.findById(student.getId()).isPresent()
-        ? Optional.empty()
-        : Optional.ofNullable(studentRepository.save(student));
+  public Student addStudent(Student student) throws KeyException {
+    if (student.getId() != null)
+      throw new KeyException("student.id must be null to be added");
+    return studentRepository.save(student);
   }
 
   // ==========
@@ -67,10 +70,12 @@ public class StudentService {
   // == Update ==
   // ============
 
-  public Optional<Student> setStudent(Student student) {
-    return studentRepository.findById(student.getId()).isPresent()
-        ? Optional.ofNullable(studentRepository.save(student))
-        : Optional.empty();
+  public Student setStudent(Student student) {
+    studentRepository
+        .findById(student.getId())
+        .orElseThrow(
+            () -> new EntityNotFoundException(String.format("Student with id '%d' not found", student.getId())));
+    return studentRepository.save(student);
   }
 
   // ============

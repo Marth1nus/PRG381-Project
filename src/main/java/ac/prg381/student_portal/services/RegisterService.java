@@ -1,12 +1,15 @@
 package ac.prg381.student_portal.services;
 
+import java.security.KeyException;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import ac.prg381.student_portal.entities.Register;
+import ac.prg381.student_portal.entities.Student;
 import ac.prg381.student_portal.repositories.RegisterRepository;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class RegisterService {
@@ -21,10 +24,10 @@ public class RegisterService {
   // == Create ==
   // ============
 
-  public Optional<Register> addRegister(Register register) {
-    return registerRepository.findById(register.getId()).isPresent()
-        ? Optional.empty()
-        : Optional.ofNullable(registerRepository.save(register));
+  public Register addRegister(Register register) throws KeyException {
+    if (register.getId() != null)
+      throw new KeyException("register.id must be null to be added");
+    return registerRepository.save(register);
   }
 
   // ==========
@@ -51,10 +54,12 @@ public class RegisterService {
   // == Update ==
   // ============
 
-  public Optional<Register> setRegister(Register register) {
-    return registerRepository.findById(register.getId()).isPresent()
-        ? Optional.ofNullable(registerRepository.save(register))
-        : Optional.empty();
+  public Register setRegister(Register register) {
+    registerRepository
+        .findById(register.getId())
+        .orElseThrow(
+            () -> new EntityNotFoundException(String.format("Register with id '%d' not found", register.getId())));
+    return registerRepository.save(register);
   }
 
   // ============
