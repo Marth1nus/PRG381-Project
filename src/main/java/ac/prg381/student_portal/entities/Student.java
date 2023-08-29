@@ -1,16 +1,14 @@
 package ac.prg381.student_portal.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import java.util.List;
+import jakarta.persistence.*;
+import java.util.Set;
+
+import org.springframework.stereotype.Indexed;
+
+/* TODO: Look into @Indexed and hibernate search. */
 
 @Entity
-@Table
+@Table(name = "students")
 public class Student {
 
   // Properties
@@ -19,17 +17,20 @@ public class Student {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column(nullable = false)
   private String name;
 
+  @Column(nullable = false)
   private String address;
 
-  @Column(unique = true)
+  @Column(nullable = false, unique = true)
   private String email;
 
+  @Column(nullable = false)
   private String password;
 
-  @OneToMany(mappedBy = "student")
-  private List<Register> registrations;
+  @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private Set<Register> registers;
 
   // Constructors
 
@@ -85,12 +86,12 @@ public class Student {
     this.password = password;
   }
 
-  public List<Register> getRegistrations() {
-    return this.registrations;
+  public Set<Register> getRegistrations() {
+    return this.registers;
   }
 
-  public void setRegistrations(List<Register> registrations) {
-    this.registrations = registrations;
+  public void setRegistrations(Set<Register> registers) {
+    this.registers = registers;
   }
 
 }
