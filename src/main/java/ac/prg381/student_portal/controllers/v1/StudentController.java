@@ -25,10 +25,10 @@ public class StudentController {
   // ============
 
   @PostMapping("/add")
-  public ResponseEntity<Student> postNew(@RequestBody Student entity) throws KeyException {
+  public ResponseEntity<Student> postNew(@RequestBody Student student) throws KeyException {
     return ResponseEntity
         .status(HttpStatus.CREATED)
-        .body(studentService.addStudent(entity));
+        .body(studentService.addStudent(student));
   }
 
   // ==========
@@ -53,10 +53,10 @@ public class StudentController {
   // ============
 
   @PutMapping("/set/{id}")
-  public ResponseEntity<Student> putById(@PathVariable Long id, @RequestBody Student entity) {
-    entity.setId(id);
+  public ResponseEntity<Student> putById(@PathVariable Long id, @RequestBody Student student) {
+    student.setId(id);
     return ResponseEntity
-        .ok(studentService.setStudent(entity));
+        .ok(studentService.setStudent(student));
   }
 
   // ============

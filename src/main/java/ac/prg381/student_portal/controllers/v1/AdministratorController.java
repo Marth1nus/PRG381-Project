@@ -25,10 +25,10 @@ public class AdministratorController {
   // ============
 
   @PostMapping("/add")
-  public ResponseEntity<Administrator> postNew(@RequestBody Administrator entity) throws KeyException {
+  public ResponseEntity<Administrator> postNew(@RequestBody Administrator administrator) throws KeyException {
     return ResponseEntity
         .status(HttpStatus.CREATED)
-        .body(administratorService.addAdministrator(entity));
+        .body(administratorService.addAdministrator(administrator));
   }
 
   // ==========
@@ -53,10 +53,10 @@ public class AdministratorController {
   // ============
 
   @PutMapping("/set/{id}")
-  public ResponseEntity<Administrator> putById(@PathVariable Long id, @RequestBody Administrator entity) {
-    entity.setId(id);
+  public ResponseEntity<Administrator> putById(@PathVariable Long id, @RequestBody Administrator administrator) {
+    administrator.setId(id);
     return ResponseEntity
-        .ok(administratorService.setAdministrator(entity));
+        .ok(administratorService.setAdministrator(administrator));
   }
 
   // ============

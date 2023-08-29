@@ -25,10 +25,10 @@ public class RegisterController {
   // ============
 
   @PostMapping("/add")
-  public ResponseEntity<Register> postNew(@RequestBody Register entity) throws KeyException {
+  public ResponseEntity<Register> postNew(@RequestBody Register register) throws KeyException {
     return ResponseEntity
         .status(HttpStatus.CREATED)
-        .body(registerService.addRegister(entity));
+        .body(registerService.addRegister(register));
   }
 
   // ==========
@@ -53,10 +53,10 @@ public class RegisterController {
   // ============
 
   @PutMapping("/set/{id}")
-  public ResponseEntity<Register> putById(@PathVariable Long id, @RequestBody Register entity) {
-    entity.setId(id);
+  public ResponseEntity<Register> putById(@PathVariable Long id, @RequestBody Register register) {
+    register.setId(id);
     return ResponseEntity
-        .ok(registerService.setRegister(entity));
+        .ok(registerService.setRegister(register));
   }
 
   // ============
