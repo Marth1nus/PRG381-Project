@@ -1,6 +1,7 @@
 package ac.prg381.student_portal.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -20,13 +21,10 @@ public class StudentService {
   // == Create ==
   // ============
 
-  public Student addOrSetStudent(Student student) {
-    return studentRepository.save(student);
-  }
-
-  public Student addStudent(Student student) {
-    Student existingStudent = studentRepository.findById(student.getId()).orElse(null);
-    return existingStudent == null ? addOrSetStudent(student) : null;
+  public Optional<Student> addStudent(Student student) {
+    return studentRepository.findById(student.getId()).isPresent()
+        ? Optional.empty()
+        : Optional.ofNullable(studentRepository.save(student));
   }
 
   // ==========
@@ -37,8 +35,8 @@ public class StudentService {
     return studentRepository.findAll();
   }
 
-  public Student getStudentById(Long id) {
-    return studentRepository.findById(id).orElse(null);
+  public Optional<Student> getStudentById(Long id) {
+    return studentRepository.findById(id);
   }
 
   public List<Student> getStudentsByName(String name) {
@@ -69,9 +67,10 @@ public class StudentService {
   // == Update ==
   // ============
 
-  public Student setStudent(Student student) {
-    Student existingStudent = studentRepository.findById(student.getId()).orElse(null);
-    return existingStudent != null ? addOrSetStudent(student) : null;
+  public Optional<Student> setStudent(Student student) {
+    return studentRepository.findById(student.getId()).isPresent()
+        ? Optional.ofNullable(studentRepository.save(student))
+        : Optional.empty();
   }
 
   // ============

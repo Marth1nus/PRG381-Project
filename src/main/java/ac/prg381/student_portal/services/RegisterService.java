@@ -1,6 +1,7 @@
 package ac.prg381.student_portal.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -20,13 +21,10 @@ public class RegisterService {
   // == Create ==
   // ============
 
-  public Register addOrSetRegister(Register register) {
-    return registerRepository.save(register);
-  }
-
-  public Register addRegister(Register register) {
-    Register existingRegister = registerRepository.findById(register.getId()).orElse(null);
-    return existingRegister == null ? addOrSetRegister(register) : null;
+  public Optional<Register> addRegister(Register register) {
+    return registerRepository.findById(register.getId()).isPresent()
+        ? Optional.empty()
+        : Optional.ofNullable(registerRepository.save(register));
   }
 
   // ==========
@@ -37,8 +35,8 @@ public class RegisterService {
     return registerRepository.findAll();
   }
 
-  public Register getRegisterById(Long id) {
-    return registerRepository.findById(id).orElse(null);
+  public Optional<Register> getRegisterById(Long id) {
+    return registerRepository.findById(id);
   }
 
   public List<Register> getRegistersByCourseName(String courseName) {
@@ -53,9 +51,10 @@ public class RegisterService {
   // == Update ==
   // ============
 
-  public Register setRegister(Register register) {
-    Register existingRegister = registerRepository.findById(register.getId()).orElse(null);
-    return existingRegister != null ? addOrSetRegister(register) : null;
+  public Optional<Register> setRegister(Register register) {
+    return registerRepository.findById(register.getId()).isPresent()
+        ? Optional.ofNullable(registerRepository.save(register))
+        : Optional.empty();
   }
 
   // ============

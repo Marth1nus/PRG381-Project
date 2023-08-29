@@ -1,6 +1,7 @@
 package ac.prg381.student_portal.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -20,13 +21,10 @@ public class AdministratorService {
   // == Create ==
   // ============
 
-  public Administrator addOrSetAdministrator(Administrator administrator) {
-    return administratorRepository.save(administrator);
-  }
-
-  public Administrator addAdministrator(Administrator administrator) {
-    Administrator existingAdministrator = administratorRepository.findById(administrator.getId()).orElse(null);
-    return existingAdministrator == null ? addOrSetAdministrator(administrator) : null;
+  public Optional<Administrator> addAdministrator(Administrator administrator) {
+    return administratorRepository.findById(administrator.getId()).isPresent()
+        ? Optional.empty()
+        : Optional.ofNullable(administratorRepository.save(administrator));
   }
 
   // ==========
@@ -37,8 +35,8 @@ public class AdministratorService {
     return administratorRepository.findAll();
   }
 
-  public Administrator getAdministratorById(Long id) {
-    return administratorRepository.findById(id).orElse(null);
+  public Optional<Administrator> getAdministratorById(Long id) {
+    return administratorRepository.findById(id);
   }
 
   public List<Administrator> getAdministratorsByName(String name) {
@@ -61,9 +59,10 @@ public class AdministratorService {
   // == Update ==
   // ============
 
-  public Administrator setAdministrator(Administrator administrator) {
-    Administrator existingAdministrator = administratorRepository.findById(administrator.getId()).orElse(null);
-    return existingAdministrator != null ? addOrSetAdministrator(administrator) : null;
+  public Optional<Administrator> setAdministrator(Administrator administrator) {
+    return administratorRepository.findById(administrator.getId()).isPresent()
+        ? Optional.ofNullable(administratorRepository.save(administrator))
+        : Optional.empty();
   }
 
   // ============
