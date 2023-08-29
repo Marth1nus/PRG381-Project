@@ -1,7 +1,7 @@
 package ac.prg381.student_portal.entities;
 
 import jakarta.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.stereotype.Indexed;
 
@@ -30,7 +30,7 @@ public class Student {
   private String password;
 
   @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private Set<Register> registers;
+  private List<Register> registers;
 
   // Constructors
 
@@ -86,11 +86,11 @@ public class Student {
     this.password = password;
   }
 
-  public Set<Register> getRegistrations() {
+  public List<Register> getRegistrations() {
     return this.registers;
   }
 
-  public void setRegistrations(Set<Register> registers) {
+  public void setRegistrations(List<Register> registers) {
     this.registers = registers;
   }
 

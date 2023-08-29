@@ -1,6 +1,6 @@
 package ac.prg381.student_portal.repositories;
 
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -12,17 +12,17 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
   // find by
 
-  Set<Student> findByName(String name);
+  List<Student> findByName(String name);
 
-  Set<Student> findByAddress(String address);
+  List<Student> findByAddress(String address);
 
-  Set<Student> findByEmail(String email);
+  List<Student> findByEmail(String email);
 
   // find by like (search)
 
-  Set<Student> findByNameLike(String name);
+  List<Student> findByNameLike(String name);
 
-  Set<Student> findByAddressLike(String address);
+  List<Student> findByAddressLike(String address);
 
-  Set<Student> findByEmailLike(String email);
+  List<Student> findByEmailLike(String email);
 }

@@ -1,6 +1,6 @@
 package ac.prg381.student_portal.repositories;
 
-import java.util.Set;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -12,13 +12,13 @@ public interface AdministratorRepository extends JpaRepository<Administrator, Lo
 
   // find by
 
-  Set<Administrator> findByName(String name);
+  List<Administrator> findByName(String name);
 
-  Set<Administrator> findByEmail(String email);
+  List<Administrator> findByEmail(String email);
 
   // find by like (search)
 
-  Set<Administrator> findByNameLike(String name);
+  List<Administrator> findByNameLike(String name);
 
-  Set<Administrator> findByEmailLike(String email);
+  List<Administrator> findByEmailLike(String email);
 }
