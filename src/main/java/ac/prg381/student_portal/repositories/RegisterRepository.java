@@ -7,11 +7,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import ac.prg381.student_portal.entities.Register;
 
 public interface RegisterRepository extends JpaRepository<Register, Long> {
-  // find by
+  // =============
+  // == find by ==
+  // =============
 
   List<Register> findByCourseName(String courseName);
 
-  // find by like (search)
+  // ===========================
+  // == find by like (search) ==
+  // ===========================
 
   List<Register> findByCourseNameLike(String courseName);
 }

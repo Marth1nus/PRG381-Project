@@ -16,7 +16,9 @@ public class RegisterService {
     this.registerRepository = registerRepository;
   }
 
-  // Create
+  // ============
+  // == Create ==
+  // ============
 
   public Register addOrSetRegister(Register register) {
     return registerRepository.save(register);
@@ -27,7 +29,9 @@ public class RegisterService {
     return existingRegister == null ? addOrSetRegister(register) : null;
   }
 
-  // Read
+  // ==========
+  // == Read ==
+  // ==========
 
   public List<Register> getAllRegisters() {
     return registerRepository.findAll();
@@ -37,14 +41,26 @@ public class RegisterService {
     return registerRepository.findById(id).orElse(null);
   }
 
-  // Update
+  public List<Register> getRegistersByCourseName(String courseName) {
+    return registerRepository.findByCourseName(courseName);
+  }
+
+  public List<Register> getRegistersByCourseNameLike(String courseName) {
+    return registerRepository.findByCourseNameLike(courseName);
+  }
+
+  // ============
+  // == Update ==
+  // ============
 
   public Register setRegister(Register register) {
     Register existingRegister = registerRepository.findById(register.getId()).orElse(null);
     return existingRegister != null ? addOrSetRegister(register) : null;
   }
 
-  // Delete
+  // ============
+  // == Delete ==
+  // ============
 
   public void removeRegisterById(Long id) {
     registerRepository.deleteById(id);

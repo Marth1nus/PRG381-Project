@@ -8,13 +8,17 @@ import ac.prg381.student_portal.entities.Administrator;
 
 public interface AdministratorRepository extends JpaRepository<Administrator, Long> {
 
-  // find by
+  // =============
+  // == find by ==
+  // =============
 
   List<Administrator> findByName(String name);
 
   List<Administrator> findByEmail(String email);
 
-  // find by like (search)
+  // ===========================
+  // == find by like (search) ==
+  // ===========================
 
   List<Administrator> findByNameLike(String name);
 

@@ -6,7 +6,9 @@ import jakarta.persistence.*;
 @Table(name = "registers")
 public class Register {
 
-  // Properties
+  // ================
+  // == Properties ==
+  // ================
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +21,9 @@ public class Register {
   @Column(nullable = false)
   private String courseName;
 
-  // Constructors
+  // ==================
+  // == Constructors ==
+  // ==================
 
   public Register() {
   }
@@ -29,31 +33,36 @@ public class Register {
     this.courseName = courseName;
   }
 
-  // Getters and Setters
+  // =============
+  // == Getters ==
+  // =============
 
   public Long getId() {
     return this.id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
   }
 
   public Student getStudent() {
     return this.student;
   }
 
-  public void setStudent(Student student) {
-    this.student = student;
-  }
-
   public String getCourseName() {
     return this.courseName;
+  }
+
+  // =============
+  // == Setters ==
+  // =============
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public void setStudent(Student student) {
+    this.student = student;
   }
 
   public void setCourseName(String courseName) {
     this.courseName = courseName;
   }
 
-  // Other
 }

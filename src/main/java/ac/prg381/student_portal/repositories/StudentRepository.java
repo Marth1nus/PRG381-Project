@@ -8,7 +8,9 @@ import ac.prg381.student_portal.entities.Student;
 
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
-  // find by
+  // =============
+  // == find by ==
+  // =============
 
   List<Student> findByName(String name);
 
@@ -16,7 +18,9 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
   List<Student> findByEmail(String email);
 
-  // find by like (search)
+  // ===========================
+  // == find by like (search) ==
+  // ===========================
 
   List<Student> findByNameLike(String name);
 

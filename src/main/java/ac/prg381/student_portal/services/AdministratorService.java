@@ -16,7 +16,9 @@ public class AdministratorService {
     this.administratorRepository = administratorRepository;
   }
 
-  // Create
+  // ============
+  // == Create ==
+  // ============
 
   public Administrator addOrSetAdministrator(Administrator administrator) {
     return administratorRepository.save(administrator);
@@ -27,7 +29,9 @@ public class AdministratorService {
     return existingAdministrator == null ? addOrSetAdministrator(administrator) : null;
   }
 
-  // Read
+  // ==========
+  // == Read ==
+  // ==========
 
   public List<Administrator> getAllAdministrators() {
     return administratorRepository.findAll();
@@ -37,14 +41,34 @@ public class AdministratorService {
     return administratorRepository.findById(id).orElse(null);
   }
 
-  // Update
+  public List<Administrator> getAdministratorsByName(String name) {
+    return administratorRepository.findByName(name);
+  }
+
+  public List<Administrator> getAdministratorsByEmail(String email) {
+    return administratorRepository.findByEmail(email);
+  }
+
+  public List<Administrator> getAdministratorsByNameLike(String name) {
+    return administratorRepository.findByNameLike(name);
+  }
+
+  public List<Administrator> getAdministratorsByEmailLike(String email) {
+    return administratorRepository.findByEmailLike(email);
+  }
+
+  // ============
+  // == Update ==
+  // ============
 
   public Administrator setAdministrator(Administrator administrator) {
     Administrator existingAdministrator = administratorRepository.findById(administrator.getId()).orElse(null);
     return existingAdministrator != null ? addOrSetAdministrator(administrator) : null;
   }
 
-  // Delete
+  // ============
+  // == Delete ==
+  // ============
 
   public void removeAdministratorById(Long id) {
     administratorRepository.deleteById(id);
