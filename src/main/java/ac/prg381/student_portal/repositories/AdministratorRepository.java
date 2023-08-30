@@ -1,6 +1,7 @@
 package ac.prg381.student_portal.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -14,7 +15,7 @@ public interface AdministratorRepository extends JpaRepository<Administrator, Lo
 
   List<Administrator> findByName(String name);
 
-  List<Administrator> findByEmail(String email);
+  Optional<Administrator> findByEmail(String email);
 
   // ===========================
   // == find by like (search) ==
