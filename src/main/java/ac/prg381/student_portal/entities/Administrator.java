@@ -3,7 +3,7 @@ package ac.prg381.student_portal.entities;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "administrators", indexes = @Index(columnList = "email"))
+@Table(name = "administrators", indexes = @Index(columnList = "email", unique = true))
 public class Administrator {
 
   // ================

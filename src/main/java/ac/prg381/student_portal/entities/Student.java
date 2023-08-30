@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "students", indexes = @Index(columnList = "email"))
+@Table(name = "students", indexes = @Index(columnList = "email", unique = true))
 public class Student {
 
   // ================
