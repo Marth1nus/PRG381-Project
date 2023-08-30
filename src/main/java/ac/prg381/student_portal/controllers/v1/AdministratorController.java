@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import ac.prg381.student_portal.entities.Administrator;
@@ -12,7 +13,7 @@ import ac.prg381.student_portal.services.AdministratorService;
 
 @RestController
 @RequestMapping("/api/v1/administrator")
-// @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
+@PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
 public class AdministratorController {
 
   private final AdministratorService administratorService;
