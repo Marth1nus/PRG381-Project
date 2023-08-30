@@ -12,6 +12,7 @@ import ac.prg381.student_portal.services.UserDetailsServiceImpl;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
+
   private final UserDetailsServiceImpl userDetailsServiceImpl;
 
   public WebSecurityConfig(UserDetailsServiceImpl userDetailsServiceImpl) {
@@ -19,24 +20,21 @@ public class WebSecurityConfig {
   }
 
   @Bean
-  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    return http
-        .authorizeHttpRequests(requests -> requests
-            .requestMatchers("/", "/home", "/static/**").permitAll()
+  SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http
+        .authorizeHttpRequests((requests) -> requests
+            .requestMatchers("/", "/home").permitAll()
             .anyRequest().authenticated())
-
-        .formLogin(form -> form
+        .formLogin((form) -> form
             .loginPage("/login")
             .permitAll())
+        .logout((logout) -> logout.permitAll());
 
-        .logout(logout -> logout
-            .permitAll())
-
-        .build();
+    return http.build();
   }
 
   @Bean
-  public UserDetailsService userDetailsService() {
+  UserDetailsService userDetailsService() {
     return userDetailsServiceImpl;
   }
 }
