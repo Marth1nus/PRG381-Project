@@ -49,7 +49,7 @@ public class StudentService {
     return studentRepository.findByAddress(address);
   }
 
-  public List<Student> getStudentsByEmail(String email) {
+  public Optional<Student> getStudentsByEmail(String email) {
     return studentRepository.findByEmail(email);
   }
 

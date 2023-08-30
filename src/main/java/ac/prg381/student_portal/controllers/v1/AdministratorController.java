@@ -5,13 +5,15 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import ac.prg381.student_portal.entities.Administrator;
 import ac.prg381.student_portal.services.AdministratorService;
 
 @RestController
-@RequestMapping("/api/v1/admin")
+@RequestMapping("/api/v1/administrator")
+@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
 public class AdministratorController {
 
   private final AdministratorService administratorService;
@@ -35,13 +37,13 @@ public class AdministratorController {
   // == Read ==
   // ==========
 
-  @GetMapping("/{get}")
+  @GetMapping("/get")
   public ResponseEntity<List<Administrator>> getAll(@RequestParam String param) {
     return ResponseEntity
         .ok(administratorService.getAllAdministrators());
   }
 
-  @GetMapping("/{id}")
+  @GetMapping({ "/get/{id}", "/{id}" })
   public ResponseEntity<Administrator> getById(@PathVariable Long id) {
     return ResponseEntity
         .status(HttpStatus.FOUND)

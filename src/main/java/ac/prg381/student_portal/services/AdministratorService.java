@@ -45,7 +45,7 @@ public class AdministratorService {
     return administratorRepository.findByName(name);
   }
 
-  public List<Administrator> getAdministratorsByEmail(String email) {
+  public Optional<Administrator> getAdministratorsByEmail(String email) {
     return administratorRepository.findByEmail(email);
   }
 
