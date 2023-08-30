@@ -56,4 +56,8 @@ public class AdministratorUserDetails implements UserDetails {
     return true;
   }
 
+  public Administrator getAdministrator() {
+    return administrator;
+  }
+
 }

@@ -56,4 +56,8 @@ public class StudentUserDetails implements UserDetails {
     return true;
   }
 
+  public Student getStudent() {
+    return student;
+  }
+
 }
