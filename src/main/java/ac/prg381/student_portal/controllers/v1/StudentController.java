@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +15,7 @@ import ac.prg381.student_portal.services.StudentService;
 
 @RestController
 @RequestMapping("/api/v1/student")
-@PreAuthorize("hasAnyRole('ROLE_STUDENT', 'ROLE_ADMINISTRATOR')")
+// @PreAuthorize("hasAnyRole('ROLE_STUDENT', 'ROLE_ADMINISTRATOR')")
 public class StudentController {
 
   private final StudentService studentService;
@@ -30,7 +29,7 @@ public class StudentController {
   // ============
 
   @PostMapping("/add")
-  @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
+  // @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
   public ResponseEntity<Student> postNew(@RequestBody Student student) throws KeyException {
     return ResponseEntity
         .status(HttpStatus.CREATED)
@@ -42,7 +41,7 @@ public class StudentController {
   // ==========
 
   @GetMapping("/get")
-  @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
+  // @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
   public ResponseEntity<List<Student>> getAll() {
     return ResponseEntity
         .ok(studentService.getAllStudents());
@@ -75,7 +74,7 @@ public class StudentController {
   // ============
 
   @DeleteMapping("/del/{id}")
-  @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
+  // @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
   public ResponseEntity<Student> deleteById(@PathVariable Long id) {
     Student deletedStudent = studentService.getStudentById(id).orElseThrow();
     studentService.removeStudentById(id);
