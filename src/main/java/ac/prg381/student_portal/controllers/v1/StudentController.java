@@ -13,7 +13,7 @@ import ac.prg381.student_portal.services.StudentService;
 
 @RestController
 @RequestMapping("/api/v1/student")
-@PreAuthorize("hasAnyRole('STUDENT', 'ADMINISTRATOR')")
+@PreAuthorize("hasAnyRole('ROLE_STUDENT', 'ROLE_ADMINISTRATOR')")
 public class StudentController {
 
   private final StudentService studentService;
@@ -27,6 +27,7 @@ public class StudentController {
   // ============
 
   @PostMapping("/add")
+  @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
   public ResponseEntity<Student> postNew(@RequestBody Student student) throws KeyException {
     return ResponseEntity
         .status(HttpStatus.CREATED)
@@ -55,6 +56,7 @@ public class StudentController {
   // ============
 
   @PutMapping("/set/{id}")
+  @PreAuthorize("principal.getStudent().getId() == #id")
   public ResponseEntity<Student> putById(@PathVariable Long id, @RequestBody Student student) {
     student.setId(id);
     return ResponseEntity
@@ -66,6 +68,7 @@ public class StudentController {
   // ============
 
   @DeleteMapping("/del/{id}")
+  @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
   public ResponseEntity<Student> deleteById(@PathVariable Long id) {
     Student deletedStudent = studentService.getStudentById(id).orElseThrow();
     studentService.removeStudentById(id);
