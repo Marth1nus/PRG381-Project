@@ -5,10 +5,13 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import ac.prg381.student_portal.entities.Student;
+import ac.prg381.student_portal.security.StudentUserDetails;
 import ac.prg381.student_portal.services.StudentService;
 
 @RestController
@@ -46,7 +49,9 @@ public class StudentController {
   }
 
   @GetMapping({ "/get/{id}", "/{id}" })
-  public ResponseEntity<Student> getById(@PathVariable Long id) {
+  public ResponseEntity<Student> getById(@PathVariable Long id,
+      @AuthenticationPrincipal StudentUserDetails studentUserDetails) {
+    assertStudentAccessingOwnDate(id, studentUserDetails);
     return ResponseEntity
         .status(HttpStatus.FOUND)
         .body(studentService.getStudentById(id).get());
@@ -57,7 +62,9 @@ public class StudentController {
   // ============
 
   @PutMapping("/set/{id}")
-  public ResponseEntity<Student> putById(@PathVariable Long id, @RequestBody Student student) {
+  public ResponseEntity<Student> putById(@PathVariable Long id, @RequestBody Student student,
+      @AuthenticationPrincipal StudentUserDetails studentUserDetails) {
+    assertStudentAccessingOwnDate(id, studentUserDetails);
     student.setId(id);
     return ResponseEntity
         .ok(studentService.setStudent(student));
@@ -75,4 +82,14 @@ public class StudentController {
     return ResponseEntity.ok(deletedStudent);
   }
 
+  // ====================
+  // == Auth utilities ==
+  // ====================
+
+  private static void assertStudentAccessingOwnDate(Long id, StudentUserDetails studentUserDetails) {
+    if (studentUserDetails == null ||
+        studentUserDetails.getStudent().getId().equals(id))
+      return;
+    throw new AccessDeniedException("Students may only access their own data after login");
+  }
 }
