@@ -20,9 +20,9 @@ public class AdministratorUserDetails implements UserDetails {
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return Arrays
-        .asList("ADMINISTRATOR")
+        .asList("ROLE_ADMINISTRATOR")
         .stream()
-        .map(roleName -> new SimpleGrantedAuthority("ROLE_" + roleName))
+        .map(roleName -> new SimpleGrantedAuthority(roleName.toString()))
         .collect(Collectors.toList());
   }
 
