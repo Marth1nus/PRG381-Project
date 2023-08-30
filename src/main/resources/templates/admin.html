@@ -15,7 +15,9 @@
       fetch('/api/v1/student/get')
         .then((res) => res.json())
         .then((students) =>
-          students.map(studentToRow).forEach((row) => studentRows.append(row)),
+          students
+            .map(studentToRow)
+            .forEach((row) => studentRows.appendChild(row)),
         )
 
       function studentToRow(student) {
