@@ -37,13 +37,13 @@ public class AdministratorController {
   // == Read ==
   // ==========
 
-  @GetMapping("/{get}")
+  @GetMapping("/get")
   public ResponseEntity<List<Administrator>> getAll(@RequestParam String param) {
     return ResponseEntity
         .ok(administratorService.getAllAdministrators());
   }
 
-  @GetMapping("/{id}")
+  @GetMapping({ "/get/{id}", "/{id}" })
   public ResponseEntity<Administrator> getById(@PathVariable Long id) {
     return ResponseEntity
         .status(HttpStatus.FOUND)

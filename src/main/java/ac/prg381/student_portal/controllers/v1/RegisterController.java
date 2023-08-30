@@ -13,7 +13,7 @@ import ac.prg381.student_portal.services.RegisterService;
 
 @RestController
 @RequestMapping("/api/v1/register")
-@PreAuthorize("hasAnyRole('STUDENT', 'ADMINISTRATOR')")
+@PreAuthorize("hasAnyRole('ROLE_STUDENT', 'ROLE_ADMINISTRATOR')")
 public class RegisterController {
 
   private final RegisterService registerService;
@@ -37,13 +37,13 @@ public class RegisterController {
   // == Read ==
   // ==========
 
-  @GetMapping("/{get}")
+  @GetMapping("/get")
   public ResponseEntity<List<Register>> getAll(@RequestParam String param) {
     return ResponseEntity
         .ok(registerService.getAllRegisters());
   }
 
-  @GetMapping("/{id}")
+  @GetMapping({ "/get/{id}", "/{id}" })
   public ResponseEntity<Register> getById(@PathVariable Long id) {
     return ResponseEntity
         .status(HttpStatus.FOUND)

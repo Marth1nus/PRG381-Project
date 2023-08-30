@@ -38,13 +38,14 @@ public class StudentController {
   // == Read ==
   // ==========
 
-  @GetMapping("/{get}")
+  @GetMapping("/get")
+  @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
   public ResponseEntity<List<Student>> getAll(@RequestParam String param) {
     return ResponseEntity
         .ok(studentService.getAllStudents());
   }
 
-  @GetMapping("/{id}")
+  @GetMapping({ "/get/{id}", "/{id}" })
   public ResponseEntity<Student> getById(@PathVariable Long id) {
     return ResponseEntity
         .status(HttpStatus.FOUND)
@@ -56,7 +57,6 @@ public class StudentController {
   // ============
 
   @PutMapping("/set/{id}")
-  @PreAuthorize("principal.getStudent().getId() == #id")
   public ResponseEntity<Student> putById(@PathVariable Long id, @RequestBody Student student) {
     student.setId(id);
     return ResponseEntity
@@ -68,7 +68,7 @@ public class StudentController {
   // ============
 
   @DeleteMapping("/del/{id}")
-  @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
+  @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
   public ResponseEntity<Student> deleteById(@PathVariable Long id) {
     Student deletedStudent = studentService.getStudentById(id).orElseThrow();
     studentService.removeStudentById(id);
