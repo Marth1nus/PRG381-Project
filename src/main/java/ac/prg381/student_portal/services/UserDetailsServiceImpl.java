@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import ac.prg381.student_portal.entities.Administrator;
 import ac.prg381.student_portal.entities.Student;
@@ -13,6 +14,7 @@ import ac.prg381.student_portal.repositories.StudentRepository;
 import ac.prg381.student_portal.security.AdministratorUserDetails;
 import ac.prg381.student_portal.security.StudentUserDetails;
 
+@Service
 public class UserDetailsServiceImpl implements UserDetailsService {
   private final AdministratorRepository administratorRepository;
   private final StudentRepository studentRepository;
