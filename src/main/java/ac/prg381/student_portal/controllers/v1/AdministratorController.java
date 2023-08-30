@@ -12,7 +12,7 @@ import ac.prg381.student_portal.entities.Administrator;
 import ac.prg381.student_portal.services.AdministratorService;
 
 @RestController
-@RequestMapping("/api/v1/admin")
+@RequestMapping("/api/v1/administrator")
 @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR')")
 public class AdministratorController {
 
