@@ -3,10 +3,8 @@ package ac.prg381.student_portal.entities;
 import jakarta.persistence.*;
 import java.util.List;
 
-/* TODO: Look into @Indexed and hibernate search. */
-
 @Entity
-@Table(name = "students")
+@Table(name = "students", indexes = @Index(columnList = "email"))
 public class Student {
 
   // ================
