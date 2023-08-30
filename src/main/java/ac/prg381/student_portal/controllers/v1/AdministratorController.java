@@ -38,7 +38,7 @@ public class AdministratorController {
   // ==========
 
   @GetMapping("/get")
-  public ResponseEntity<List<Administrator>> getAll(@RequestParam String param) {
+  public ResponseEntity<List<Administrator>> getAll() {
     return ResponseEntity
         .ok(administratorService.getAllAdministrators());
   }

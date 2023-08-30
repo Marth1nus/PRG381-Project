@@ -38,7 +38,7 @@ public class RegisterController {
   // ==========
 
   @GetMapping("/get")
-  public ResponseEntity<List<Register>> getAll(@RequestParam String param) {
+  public ResponseEntity<List<Register>> getAll() {
     return ResponseEntity
         .ok(registerService.getAllRegisters());
   }
