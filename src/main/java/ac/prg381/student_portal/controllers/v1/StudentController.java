@@ -43,7 +43,7 @@ public class StudentController {
 
   @GetMapping("/get")
   @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
-  public ResponseEntity<List<Student>> getAll(@RequestParam String param) {
+  public ResponseEntity<List<Student>> getAll() {
     return ResponseEntity
         .ok(studentService.getAllStudents());
   }

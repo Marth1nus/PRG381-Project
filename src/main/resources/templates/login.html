@@ -1,36 +1,46 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
   <head>
-    <meta charset="UTF-8" />
-    <title>Login</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <title>Spring Security Example</title>
   </head>
   <body>
-    <div th:if="${param.error}">
-      <p class="error">Invalid credentials.</p>
-    </div>
-    <div th:if="${param.logout}">
-      <p class="message">You have been logged out.</p>
-    </div>
+    <div th:if="${param.error}">Invalid username and password.</div>
+    <div th:if="${param.logout}">You have been logged out.</div>
     <form th:action="@{/login}" method="post">
-      <label for="username">Username:</label>
-      <input
-        type="text"
-        id="username"
-        name="username"
-        autofocus="autofocus"
-        required="required"
-      />
-      <br />
-      <label for="password">Password:</label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        required="required"
-      />
-      <br />
-      <input type="submit" value="Log in" />
+      <div>
+        <label> User Name: </label>
+        <input type="text" name="username" />
+      </div>
+      <div>
+        <label> Password: </label>
+        <input type="password" name="password" />
+      </div>
+      <div>
+        <input type="submit" value="Sign In" />
+      </div>
     </form>
+    <style>
+      body > div {
+        color: transparent;
+        transition: 1s;
+      }
+      form {
+        width: fit-content;
+      }
+      form > div {
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        border-radius: 2px;
+        border-left: 1px solid #888;
+        border-right: 1px solid #888;
+      }
+
+      form > div > input {
+        background: none;
+        border: none;
+        border-bottom: 1px solid #888;
+      }
+    </style>
   </body>
 </html>
