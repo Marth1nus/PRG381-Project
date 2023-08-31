@@ -2,6 +2,7 @@ package ac.prg381.student_portal.controllers.v1;
 
 import java.security.KeyException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,7 +34,7 @@ public class RegisterController {
   public ResponseEntity<Register> postNew(@RequestBody Register register) throws KeyException {
     return ResponseEntity
         .status(HttpStatus.CREATED)
-        .body(registerService.addRegister(register));
+        .body(prepareRegister(registerService.addRegister(register)));
   }
 
   // ==========
@@ -43,7 +44,9 @@ public class RegisterController {
   @GetMapping("/get")
   public ResponseEntity<List<Register>> getAll() {
     return ResponseEntity
-        .ok(registerService.getAllRegisters());
+        .ok(registerService.getAllRegisters().stream()
+            .map(register -> prepareRegister(register))
+            .collect(Collectors.toList()));
   }
 
   @GetMapping({ "/get/{id}", "/{id}" })
@@ -61,7 +64,7 @@ public class RegisterController {
 
     return ResponseEntity
         .status(HttpStatus.FOUND)
-        .body(register);
+        .body(prepareRegister(register));
   }
 
   // ============
@@ -73,7 +76,7 @@ public class RegisterController {
   public ResponseEntity<Register> putById(@PathVariable Long id, @RequestBody Register register) {
     register.setId(id);
     return ResponseEntity
-        .ok(registerService.setRegister(register));
+        .ok(prepareRegister(registerService.setRegister(register)));
   }
 
   // ============
@@ -85,6 +88,18 @@ public class RegisterController {
   public ResponseEntity<Register> deleteById(@PathVariable Long id) {
     Register deletedRegister = registerService.getRegisterById(id).orElseThrow();
     registerService.removeRegisterById(id);
-    return ResponseEntity.ok(deletedRegister);
+    return ResponseEntity.ok(prepareRegister(deletedRegister));
   }
+
+  // ==========
+  // == Util ==
+  // ==========
+
+  public static Register prepareRegister(Register register) {
+    // limit depth
+    // if (register.getStudent() != null)
+    // StudentController.prepareStudent(register.getStudent());
+    return register;
+  }
+
 }
