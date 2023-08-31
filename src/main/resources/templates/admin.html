@@ -1,38 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Page</title>
+    <title>Admin - Students</title>
   </head>
   <body>
+    <h2>Admin - Students</h2>
+
     <table>
-      <tbody id="studentRows"></tbody>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="student : ${students}">
+          <td th:text="${student.id}"></td>
+          <td><input type="text" th:value="${student.name}" /></td>
+          <td><input type="text" th:value="${student.email}" /></td>
+          <td>
+            <button th:onclick="'editStudent(' + ${student.id} + ')'">
+              Edit
+            </button>
+            <button th:onclick="'saveStudent(' + ${student.id} + ')'">
+              Save
+            </button>
+            <button
+              th:id="student-${student.id}"
+              th:onclick="'deleteStudent(' + ${student.id} + ')'"
+            >
+              Delete
+            </button>
+            <button th:onclick="'showMore(' + ${student.id} + ')'">
+              Show More
+            </button>
+          </td>
+        </tr>
+      </tbody>
     </table>
-    <script>
-      const studentRows = document.getElementById('studentRows')
 
-      fetch('/api/v1/student/get')
-        .then((res) => res.json())
-        .then((students) =>
-          students
-            .map(studentToRow)
-            .forEach((row) => studentRows.appendChild(row)),
-        )
+    <script th:inline="javascript">
+      function editStudent(id) {
+        // TODO implement
+      }
 
-      function studentToRow(student) {
-        const row = document.createElement('tr')
-        row.id = student.id
-        row.className = 'student-row'
-        const cols = Object.values(student)
-          .map(String)
-          .map((value) => {
-            const col = document.createElement('td')
-            col.textContent = value
-            return col
-          })
-        row.append(...cols)
-        return row
+      function saveStudent(id) {
+        // TODO implement
+      }
+
+      function deleteStudent(id) {
+        // TODO implement
+      }
+
+      function showMore(id) {
+        // TODO implement
       }
     </script>
   </body>
