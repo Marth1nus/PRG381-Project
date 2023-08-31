@@ -3,6 +3,8 @@ package ac.prg381.student_portal.entities;
 import jakarta.persistence.*;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "students", indexes = @Index(name = "index_student_email", columnList = "email", unique = true))
 public class Student {
@@ -28,6 +30,7 @@ public class Student {
   private String password;
 
   @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  @JsonManagedReference
   private List<Register> registers;
 
   // ==================

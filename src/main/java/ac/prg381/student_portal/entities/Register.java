@@ -1,5 +1,7 @@
 package ac.prg381.student_portal.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -16,6 +18,7 @@ public class Register {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "student_id", nullable = false)
+  @JsonBackReference
   private Student student;
 
   @Column(nullable = false)
