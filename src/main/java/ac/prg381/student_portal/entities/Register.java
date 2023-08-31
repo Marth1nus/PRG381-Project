@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "registers", indexes = @Index(name = "index_register_course_name", columnList = "courseName", unique = true))
+@Table(name = "registers")
 public class Register {
 
   // ================
@@ -21,7 +21,7 @@ public class Register {
   @JsonBackReference
   private Student student;
 
-  @Column(nullable = false, unique = true)
+  @Column(nullable = false)
   private String courseName;
 
   // ==================
