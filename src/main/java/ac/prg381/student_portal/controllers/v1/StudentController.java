@@ -2,7 +2,6 @@ package ac.prg381.student_portal.controllers.v1;
 
 import java.security.KeyException;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
