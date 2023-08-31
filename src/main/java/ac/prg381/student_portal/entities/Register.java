@@ -1,9 +1,11 @@
 package ac.prg381.student_portal.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "registers")
+@Table(name = "registers", indexes = @Index(name = "index_register_course_name", columnList = "courseName", unique = true))
 public class Register {
 
   // ================
@@ -16,9 +18,10 @@ public class Register {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "student_id", nullable = false)
+  @JsonBackReference
   private Student student;
 
-  @Column(nullable = false)
+  @Column(nullable = false, unique = true)
   private String courseName;
 
   // ==================
